@@ -1,5 +1,5 @@
 <template>
-  <h1>Todo's list</h1>
+  <h1>Todo list</h1>
 </template>
 
 <script>

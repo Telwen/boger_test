@@ -5,6 +5,7 @@
       <todo-input v-on:todo:add="addTodo"></todo-input>
       <todo-item  v-for="todo in todos" v-bind:todo="todo" v-on:todo:remove="removeTodo" :key="todo.id"></todo-item>
     </div>
+    <button class="btn btn-primary" v-on:click="save">Save</button>
   </div>
 </template>
 
@@ -12,17 +13,14 @@
 import AppHeader from './components/AppHeader.vue';
 import TodoInput from './components/TodoInput.vue';
 import TodoItem from './components/TodoItem.vue';
+import axios from 'axios';
 
 export default {
   name: 'app',
   data() {
     return {
-      todos: [
-        {id: 0, text: "Write a app"},
-        {id: 1, text: "Find a job"},
-        {id: 2, text: "Become rich"}
-      ],
-      nextId: 3
+      todos: [],
+      nextId: 0
     };
   },
   components: {
@@ -40,10 +38,16 @@ export default {
     },
     removeTodo(id) {
       let todos = this.todos;
-      this.todos = todos.filter((todo) => todo.id != id);
-      this.todos.remove((todo) => todo.id != id);
-    }
-  }
+      this.todos= todos.filter((todo) => todo.id != id);
+    },
+    save() {
+      axios.post("http://localhost:5000/to_do",
+       this.todos
+       )
+      .then(response => console.log(response.data)
+    )}
+
+  },
 }
 </script>
 
