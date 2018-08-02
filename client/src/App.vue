@@ -1,37 +1,54 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+<div class="app">
+    <div class="todo-wrapper">
+      <app-header></app-header>
+      <todo-input v-on:todo:add="addTodo"></todo-input>
+      <todo-item  v-for="todo in todos" v-bind:todo="todo" v-on:todo:remove="removeTodo" :key="todo.id"></todo-item>
+    </div>
   </div>
 </template>
 
 <script>
+import AppHeader from './components/AppHeader.vue';
+import TodoInput from './components/TodoInput.vue';
+import TodoItem from './components/TodoItem.vue';
+
 export default {
   name: 'app',
-  data () {
+  data() {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      todos: [
+        {id: 0, text: "Write a app"},
+        {id: 1, text: "Find a job"},
+        {id: 2, text: "Become rich"}
+      ],
+      nextId: 3
+    };
+  },
+  components: {
+    AppHeader,
+    TodoInput,
+    TodoItem
+  },
+  methods: {
+    addTodo(text) {
+      if (text == ''){
+        pass}
+      else{
+      this.todos.push({id: this.nextId, text: text});
+      this.nextId++;}
+    },
+    removeTodo(id) {
+      let todos = this.todos;
+      this.todos = todos.filter((todo) => todo.id != id);
+      this.todos.remove((todo) => todo.id != id);
     }
   }
 }
 </script>
 
 <style>
-#app {
+.app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -40,21 +57,11 @@ export default {
   margin-top: 60px;
 }
 
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
+.todo-wrapper {
+  margin: 20px auto 20px auto;
+  width: 500px;
+  min-height: 600px;
+  border: 5px solid rgba(73, 204, 249, 1.0);
+  padding: 20px;
 }
 </style>
