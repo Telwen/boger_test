@@ -1,9 +1,10 @@
 <template>
+
 <div class="app">
     <div class="todo-wrapper">
       <app-header></app-header>
       <todo-input v-on:todo:add="addTodo"></todo-input>
-      <todo-item  v-for="todo in todos" v-bind:todo="todo" v-on:todo:remove="removeTodo" :key="todo.id"></todo-item>
+      <todo-item  v-for="todo in todos.tdl" v-bind:todo="todo" v-on:todo:remove="removeTodo" :key="todo.id"></todo-item>
     </div>
     <button class="btn btn-primary" v-on:click="save">Save</button>
   </div>
@@ -16,13 +17,8 @@ import TodoItem from './components/TodoItem.vue';
 import axios from 'axios';
 
 export default {
-  name: 'app',
-  data() {
-    return {
-      todos: [],
-      nextId: 0
-    };
-  },
+  name: 'td-list',
+  props: ['todos'],
   components: {
     AppHeader,
     TodoInput,
@@ -33,14 +29,15 @@ export default {
       if (text == ''){
         pass}
       else{
-      this.todos.push({id: this.nextId, text: text});
-      this.nextId++;}
-    },
+      this.todos.tdl.push({id: this.todos.tdl.length , text: text})
+    }},
     removeTodo(id) {
-      let todos = this.todos;
-      this.todos= todos.filter((todo) => todo.id != id);
+      let todos = this.todos.tdl;
+      this.todos.tdl= todos.filter((todo) => todo.id != id);
+      console.log(this.todos.tdl)
     },
     save() {
+      console.log(this.todos)
       axios.post("http://localhost:5000/to_do",
        this.todos
        )
