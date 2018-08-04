@@ -1,6 +1,6 @@
 <template>
   <div class="todo-input">
-    <input type="text" v-model="text"/>
+    <input placeholder='Type what you need to do' class="td-input" type="text" v-model="text"/>
     <button class="btn btn-primary" v-on:click="addTodo">Submit</button>
   </div>
 </template>
@@ -42,17 +42,19 @@ export default {
   background-color: transparent;
 }
 
-input {
+.td-input {
   width: 80%;
   border: none;
   border-top: 2px solid rgba(73, 204, 249, 1.0);
   border-bottom: 2px solid rgba(73, 204, 249, 1.0);
   margin-right: 10px;
+  margin-bottom: 10px;
   padding: 5px;
   line-height: 17px;
+  text-align:center;
 }
 
-input:focus {
+.td-input:focus {
   outline: none;
   border: none;
   border-top: 2px solid rgba(73, 204, 249, 1.0);
