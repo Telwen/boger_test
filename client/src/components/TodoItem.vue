@@ -1,20 +1,22 @@
 <template>
-  <div class="todoWrapper">
-    <button class="removeTodo" v-on:click="removeTodo">remove</button>{{todo.text}}
-  </div>
+<div class="todoWrapper">
+  <button class="removeTodo" v-on:click="removeTodo">remove</button>{{todo.text}}
+</div>
 </template>
 
 <script>
 export default {
   name: 'todo-item',
-  props: ['todo'],
-  methods: {
-    removeTodo() {
-      this.$emit('todo:remove', this.todo.id);
+    props: ['todo'],
+    methods: {
+      removeTodo() {
+        this.$emit('todo:remove', this.todo.id);
+      }
     }
   }
-}
 </script>
+
+
 <style>
 .todoWrapper {
   border-bottom: 1px solid #efefef;
@@ -22,6 +24,7 @@ export default {
   margin-bottom: 10px;
   margin-top: 20px;
 }
+
 .removeTodo {
   margin-right: 20px;
   margin-bottom: 10px;

@@ -8,46 +8,55 @@ app = Flask(__name__)
 CORS(app)
 
 
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
-
-
-@app.route('/delete', methods=['POST'])
-def delete():
+@app.route('/login', methods=['POST'])
+def login():
     res = request.json
-    todos.clear()
-    for i in res:
-        todos.append(i)
-    print(todos)
+    tdl = todos.get(res["username"])
+    if tdl is None:
+        todos[res["username"]] = []
+    return jsonify({})
+
+
+@app.route('/delete', methods=['DELETE'])
+def delete():
+    res = request.args
+    headers = request.headers
+    tdls = todos.get(headers['Username'])
+    tdl_index = None
+    for index, tdl in enumerate(tdls):
+        if tdl['id'] == int(res['id']):
+            tdl_index = index
+            break
+    tdls.pop(tdl_index)
     return jsonify(request.json)
 
-@app.route('/to_do', methods=['GET'])
-def to_do():
-    return jsonify(todos)
+
+@app.route('/todos', methods=['GET'])
+def get_todos():
+    res = request.headers
+    tdl = todos.get(res["Username"])
+    return jsonify(tdl)
+
 
 @app.route('/to_do', methods=['POST'])
-def tset():
+def post_todos():
     res = request.json
-    print(res)
+    headers = request.headers
     id = res['id']
-    title = res['title']
-    for args in todos:
-        if args['id'] == id:
-            args['tdl'].clear()
-            for tdls in res['tdl']:
-                args['tdl'].append(tdls)
-            if args['title'] != title:
-                args['title'] = title
-    if id >= len(todos):
-        todos.append(res)
+    user_tdl = todos.get(headers["Username"])
+    if user_tdl is not None:
+        is_updated = False
 
+        for args in user_tdl:
+            if args['id'] != id:
+                continue
+            args.update(res)
+            is_updated = True
 
-    pprint(todos)
-
+        if not is_updated:
+            todos[headers["username"]].append(res)
     return jsonify(request.json)
 
 
 if __name__ == '__main__':
     app.run()
-
