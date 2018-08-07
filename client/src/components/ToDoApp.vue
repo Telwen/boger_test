@@ -1,8 +1,22 @@
 <template>
 <div class='tdl-holder'>
-  <button class='logout btn btn-primary' @click='logout'>logout</button>
-  <ToDoList v-for="todos in response" v-bind:todos='todos' :key="response.id" v-on:tdl:del="del_tdl"></ToDoList>
-  <button class="add-new-tdl" v-on:click="add_new_tdl">+</button>
+  <v-layout align-end justify-end row>
+    <v-btn
+      outline right 
+      color='blue'
+      @click='logout'>Log out
+    </v-btn>
+  </v-layout
+  <v-container grid-list-md text-xs-center>
+    <v-layout align-center justify-space-around row wrap fill-height grid-list-{xl}>
+      <ToDoList mt-5 v-for="todos in response" v-bind:todos='todos' :key="response.id" v-on:tdl:del="del_tdl"></ToDoList>
+      <v-btn
+        color='blue'
+        large fab 
+        @click='add_new_tdl'>+
+      </v-btn>
+    </v-layout>
+  </v-container>
 </div>
 </template>
 
@@ -38,6 +52,9 @@ export default {
       ToDoList,
     },
     methods: {
+      /**
+        * add to current todo list new one 
+        */
       add_new_tdl() {
         this.response.push({
           'id': this.response.length,
@@ -45,16 +62,24 @@ export default {
           'tdl': []
         })
       },
+      /**
+        * delete current username from local storage and redirect to login page  
+        */
       logout() {
         this.username = null
         localStorage.username = null
         this.$router.push('/')
       },
+      /**
+        * take from children element todo if and remove if from local var and server
+        *
+        *@id {number} removable todo id
+        */
       del_tdl(id) {
         let todos = this.response;
         this.response = todos.filter((todo) => todo.id != id);
-        console.log(id)
-        axios.delete("http://localhost:5000/delete", {
+        axios.delete(
+          "http://localhost:5000/todos/", {
           params: {
             'id': id
           },
@@ -66,30 +91,3 @@ export default {
     }
   }
 </script>
-
-<style>
-.logout {
-  position: fixed;
-  bottom: 90%;
-  left: 85%;
-}
-
-.add-new-tdl {
-  font-size: 100px;
-  color: rgba(73, 204, 249, 1.0);
-  background-image: none;
-  background: transparent;
-  float: left;
-  background-color: transparent;
-  border: medium none
-}
-
-.tdl-holder {
-  height: 800px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
-}
-</style>
