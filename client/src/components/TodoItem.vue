@@ -2,10 +2,15 @@
 <div style='border-bottom: 1px solid black'>
   <v-layout>
     <v-btn
-    color="red lighten-1"
-    @click="removeTodo">
+      color="red lighten-1"
+      @click="removeTodo"
+    >
       Remove
-    </v-btn><p style='font-size: 20px; margin-top: 11px'>{{todo.text}}</p>
+    </v-btn>
+    <p style='font-size: 20px; margin-top: 11px'
+    >
+      {{todo.text}}
+    </p>
   </v-layout>
 </div>
 

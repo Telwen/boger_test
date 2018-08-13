@@ -1,19 +1,41 @@
 <template>
 <div class='tdl-holder'>
-  <v-layout align-end justify-end row>
+  <v-layout 
+    align-end 
+    justify-end 
+    row
+  >
     <v-btn
       outline right 
       color='blue'
       @click='logout'>Log out
     </v-btn>
   </v-layout
-  <v-container grid-list-md text-xs-center>
-    <v-layout align-center justify-space-around row wrap fill-height grid-list-{xl}>
-      <ToDoList mt-5 v-for="todos in response" v-bind:todos='todos' :key="response.id" v-on:tdl:del="del_tdl"></ToDoList>
+  <v-container 
+    grid-list-md 
+    text-xs-center 
+  >
+    <v-layout 
+      align-center  
+      justify-space-around 
+      row 
+      wrap 
+      fill-height 
+      grid-list-{xl}
+    >
+      <to-do-list
+        v-for="todos in response" 
+        :key="response.id" 
+        :todos='todos' 
+        @tdl:del="del_tdl"
+        mt-5 
+      />
       <v-btn
+        @click='add_new_tdl'
         color='blue'
         large fab 
-        @click='add_new_tdl'>+
+      >
+        +
       </v-btn>
     </v-layout>
   </v-container>
@@ -39,12 +61,13 @@ export default {
       }
     },
     created() {
-      axios.get("http://localhost:5000/todos", {
-          headers: {
-            'username': this.username
-          }
-        })
-        .then(response => {
+      axios.get(
+        "http://localhost:5000/todos",
+        {
+          headers:
+           {'username': this.username}
+        }).then(response => 
+        {
           this.response = response.data
         })
     },
@@ -56,11 +79,12 @@ export default {
         * add to current todo list new one 
         */
       add_new_tdl() {
-        this.response.push({
-          'id': this.response.length,
-          'title': 'New todo list',
-          'tdl': []
-        })
+        this.response.push(
+          {
+            'id': this.response.length,
+            'title': 'New todo list',
+            'tdl': []
+          })
       },
       /**
         * delete current username from local storage and redirect to login page  
@@ -80,12 +104,10 @@ export default {
         this.response = todos.filter((todo) => todo.id != id);
         axios.delete(
           "http://localhost:5000/todos/", {
-          params: {
-            'id': id
-          },
-          headers: {
-            'username': this.username
-          }
+          params: 
+            {'id': id},
+          headers: 
+            {'username': this.username}
         })
       }
     }

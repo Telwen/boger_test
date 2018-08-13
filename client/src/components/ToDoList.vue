@@ -10,19 +10,30 @@
               small round fab flat block 
               color='red'
               @click='del_tdl'
-            >x</v-btn>
+            >
+              x
+            </v-btn>
             <v-text-field
-              :placeholder="todos.title"
               v-model="name"
+              :placeholder="todos.title"
               color='black'
-            ></v-text-field>
-            <todo-input v-on:todo:add="addTodo"></todo-input>
-            <todo-item v-for="todo in todos.tdl" v-bind:todo="todo" v-on:todo:remove="removeTodo" :key="todo.id"></todo-item>
+            />
+            <todo-input 
+              @todo:add="addTodo"
+            />
+            <todo-item 
+              v-for="todo in todos.tdl" 
+              :key="todo.id"
+              :todo="todo" 
+              @todo:remove="removeTodo" 
+            />
             <v-btn
               outline
               color='blue'
               @click='save'
-            >Save</v-btn>
+            >
+              Save
+            </v-btn>
           </v-flex>
       </v-container>
     </v-card>
@@ -35,7 +46,7 @@ import TodoItem from './TodoItem.vue';
 import axios from 'axios';
 
 export default {
-  name: 'td-list',
+  name: 'to-do-list',
     props: ['todos'],
     data() {
       return {
@@ -85,12 +96,13 @@ export default {
       * all changes to server to apply it
       */
       save() {
-        if (this.name == null) {} else {
+        if (this.name == null) {} 
+        else {
           delete this.todos.title
           this.todos.title = this.name
         }
         axios.post(
-          "http://localhost:5000/to_do",
+          "http://localhost:5000/todos",
           this.todos,
            {headers: {'username': this.username}
         })

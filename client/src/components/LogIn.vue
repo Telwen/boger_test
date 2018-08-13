@@ -7,13 +7,14 @@
           offset-xs4 >
           <v-text-field
             placeholder="Enter your login"
-            v-model="username"
+            v-model.trim="username"
           ></v-text-field>
           <v-btn
             outline
             color='blue'
-            @click="login">
-              Log in
+            @click="login"
+          >
+            Log in
           </v-btn>
         </v-flex>
       </v-layout>
@@ -39,10 +40,11 @@ export default {
         */
       login(username) {
         axios.post(
-          "http://localhost:5000/login", {
-          'username': this.username
-          })
-          .then(response => {})
+          "http://localhost:5000/login",
+          {
+            'username': this.username
+          }
+          ).then(response => {})
         localStorage.username = this.username;
         this.$router.push('todos')
       }

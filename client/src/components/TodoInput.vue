@@ -1,17 +1,23 @@
 <template>
   <div>
-    <v-layout align-center justify-start column fill-height>
+    <v-layout 
+      align-center 
+      justify-start 
+      column 
+      fill-height
+    >
       <v-flex xs4>
         <v-text-field
-          placeholder="Type what you need to do"
           v-model="text"
+          placeholder="Type what you need to do"
           color='black'
         ></v-text-field>
         <v-btn
+          @click="addTodo"
           ml-5
           color="blue"
-          @click="addTodo">
-            Submit
+        >
+          Submit
         </v-btn>
       </v-flex>
     </v-layout>
