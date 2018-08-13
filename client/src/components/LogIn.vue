@@ -1,11 +1,25 @@
 <template>
-<div class='login'>
-  <input placeholder="Enter your login" class="log-input" type="text" v-model="username" />
-  <button type="button" class="login-but btn btn-primary" @click="login">
-    Log in
-  </button>
-
-</div>
+  <div>
+    <v-app>
+      <v-layout align-center>
+        <v-flex
+          xs4 class='text-xs-center'
+          offset-xs4 >
+          <v-text-field
+            placeholder="Enter your login"
+            v-model.trim="username"
+          ></v-text-field>
+          <v-btn
+            @click="login"
+            outline
+            color='blue'
+          >
+            Log in
+          </v-btn>
+        </v-flex>
+      </v-layout>
+    </v-app>
+  </div>
 </template>
 
 <script>
@@ -18,40 +32,22 @@ export default {
       }
     },
     methods: {
+      /**
+        * take username from input and uisng axios send it to server to check if user exist, add current username
+        * to local storage, redirects to users todos page
+        *  
+        * @username {string} entered username
+        */
       login(username) {
-        axios.post("http://localhost:5000/login", {
+        axios.post(
+          "http://localhost:5000/login",
+          {
             'username': this.username
-          })
-          .then(response => {})
+          }
+          ).then(response => {})
         localStorage.username = this.username;
         this.$router.push('todos')
       }
     }
   }
 </script>
-
-<style>
-.login {
-  height: 500px;
-}
-
-.log-input {
-  position: relative;
-  border: 2px solid rgba(73, 204, 249, 1.0);
-  bottom: -80%;
-  left: 45%;
-}
-
-.log-input:focus {
-  outline: none;
-}
-
-.login-but {
-  position: relative;
-  bottom: -90%;
-  left: 35%;
-  color: rgba(73, 204, 249, 1.0);
-  border-color: rgba(73, 204, 249, 1.0);
-  background-color: transparent;
-}
-</style>

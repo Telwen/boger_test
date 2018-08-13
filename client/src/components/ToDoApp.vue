@@ -1,8 +1,46 @@
 <template>
 <div class='tdl-holder'>
-  <button class='logout btn btn-primary' @click='logout'>logout</button>
-  <ToDoList v-for="todos in response" v-bind:todos='todos' :key="response.id" v-on:tdl:del="del_tdl"></ToDoList>
-  <button class="add-new-tdl" v-on:click="add_new_tdl">+</button>
+  <v-layout 
+    align-end 
+    justify-end 
+    row
+  >
+    <v-btn
+      @click='logout'
+      outline right 
+      color='blue'
+    >
+      Log out
+    </v-btn>
+  </v-layout
+  <v-container 
+    grid-list-md 
+    text-xs-center 
+  >
+    <v-layout 
+      align-center  
+      justify-space-around 
+      row 
+      wrap 
+      fill-height 
+      grid-list-{xl}
+    >
+      <to-do-list
+        v-for="todos in response" 
+        :key="response.id" 
+        :todos='todos' 
+        @tdl:del="del_tdl"
+        mt-5 
+      />
+      <v-btn
+        @click='add_new_tdl'
+        color='blue'
+        large fab 
+      >
+        +
+      </v-btn>
+    </v-layout>
+  </v-container>
 </div>
 </template>
 
@@ -25,12 +63,13 @@ export default {
       }
     },
     created() {
-      axios.get("http://localhost:5000/todos", {
-          headers: {
-            'username': this.username
-          }
-        })
-        .then(response => {
+      axios.get(
+        "http://localhost:5000/todos",
+        {
+          headers:
+           {'username': this.username}
+        }).then(response => 
+        {
           this.response = response.data
         })
     },
@@ -38,58 +77,42 @@ export default {
       ToDoList,
     },
     methods: {
+      /**
+        * add to current todo list new one 
+        */
       add_new_tdl() {
-        this.response.push({
-          'id': this.response.length,
-          'title': 'New todo list',
-          'tdl': []
-        })
+        this.response.push(
+          {
+            'id': this.response.length,
+            'title': 'New todo list',
+            'tdl': []
+          })
       },
+      /**
+        * delete current username from local storage and redirect to login page  
+        */
       logout() {
         this.username = null
         localStorage.username = null
         this.$router.push('/')
       },
+      /**
+        * take from children element todo if and remove if from local var and server
+        *
+        *@id {number} removable todo id
+        */
       del_tdl(id) {
         let todos = this.response;
         this.response = todos.filter((todo) => todo.id != id);
-        console.log(id)
-        axios.delete("http://localhost:5000/delete", {
-          params: {
-            'id': id
-          },
-          headers: {
-            'username': this.username
-          }
-        })
+        axios.delete(
+          "http://localhost:5000/todos/",
+          {
+            params: 
+              {'id': id},
+            headers: 
+              {'username': this.username}
+          })
       }
     }
   }
 </script>
-
-<style>
-.logout {
-  position: fixed;
-  bottom: 90%;
-  left: 85%;
-}
-
-.add-new-tdl {
-  font-size: 100px;
-  color: rgba(73, 204, 249, 1.0);
-  background-image: none;
-  background: transparent;
-  float: left;
-  background-color: transparent;
-  border: medium none
-}
-
-.tdl-holder {
-  height: 800px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
-}
-</style>

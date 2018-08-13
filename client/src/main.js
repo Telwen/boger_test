@@ -3,7 +3,10 @@ import LoginApp from './components/Login.vue'
 import App from './App.vue'
 import ToDoApp from './components/ToDoApp.vue'
 import VueRouter from 'vue-router'
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
 
+Vue.use(Vuetify)
 Vue.use(VueRouter);
 
 const routes = [

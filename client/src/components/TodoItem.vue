@@ -1,7 +1,19 @@
 <template>
-<div class="todoWrapper">
-  <button class="removeTodo" v-on:click="removeTodo">remove</button>{{todo.text}}
+<div style='border-bottom: 1px solid black'>
+  <v-layout>
+    <v-btn
+      @click="removeTodo"
+      color="red lighten-1"
+    >
+      Remove
+    </v-btn>
+    <p style='font-size: 20px; margin-top: 11px'
+    >
+      {{todo.text}}
+    </p>
+  </v-layout>
 </div>
+
 </template>
 
 <script>
@@ -9,33 +21,12 @@ export default {
   name: 'todo-item',
     props: ['todo'],
     methods: {
+      /**
+      * send to parent todo string id which need to delete  
+      */
       removeTodo() {
         this.$emit('todo:remove', this.todo.id);
       }
     }
   }
 </script>
-
-
-<style>
-.todoWrapper {
-  border-bottom: 1px solid #efefef;
-  text-align: left;
-  margin-bottom: 10px;
-  margin-top: 20px;
-}
-
-.removeTodo {
-  margin-right: 20px;
-  margin-bottom: 10px;
-  outline: none;
-  box-shadow: none;
-  border-width: 2px;
-  border-radius: 3px;
-  border-style: solid;
-  padding: 8px;
-  color: rgba(203, 20, 32, 0.4);
-  border-color: rgba(203, 20, 32, 0.4);
-  background-color: transparent;
-}
-</style>
