@@ -7,9 +7,9 @@
             class='text-xs-center'
           >
             <v-btn
+              @click='del_tdl'
               small round fab flat block 
               color='red'
-              @click='del_tdl'
             >
               x
             </v-btn>
@@ -28,9 +28,9 @@
               @todo:remove="removeTodo" 
             />
             <v-btn
+              @click='save'
               outline
               color='blue'
-              @click='save'
             >
               Save
             </v-btn>
@@ -104,8 +104,10 @@ export default {
         axios.post(
           "http://localhost:5000/todos",
           this.todos,
-           {headers: {'username': this.username}
-        })
+          {
+            headers:
+              {'username': this.username}
+          })
       }
 
     },

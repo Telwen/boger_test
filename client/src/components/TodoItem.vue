@@ -2,8 +2,8 @@
 <div style='border-bottom: 1px solid black'>
   <v-layout>
     <v-btn
-      color="red lighten-1"
       @click="removeTodo"
+      color="red lighten-1"
     >
       Remove
     </v-btn>

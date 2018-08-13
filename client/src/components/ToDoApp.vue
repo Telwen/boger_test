@@ -6,9 +6,11 @@
     row
   >
     <v-btn
+      @click='logout'
       outline right 
       color='blue'
-      @click='logout'>Log out
+    >
+      Log out
     </v-btn>
   </v-layout
   <v-container 
@@ -103,12 +105,13 @@ export default {
         let todos = this.response;
         this.response = todos.filter((todo) => todo.id != id);
         axios.delete(
-          "http://localhost:5000/todos/", {
-          params: 
-            {'id': id},
-          headers: 
-            {'username': this.username}
-        })
+          "http://localhost:5000/todos/",
+          {
+            params: 
+              {'id': id},
+            headers: 
+              {'username': this.username}
+          })
       }
     }
   }

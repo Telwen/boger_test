@@ -10,9 +10,9 @@
             v-model.trim="username"
           ></v-text-field>
           <v-btn
+            @click="login"
             outline
             color='blue'
-            @click="login"
           >
             Log in
           </v-btn>

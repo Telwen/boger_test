@@ -11,7 +11,7 @@
           v-model="text"
           placeholder="Type what you need to do"
           color='black'
-        ></v-text-field>
+        />
         <v-btn
           @click="addTodo"
           ml-5
